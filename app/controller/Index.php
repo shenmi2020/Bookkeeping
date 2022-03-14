@@ -3,12 +3,20 @@
 namespace app\controller;
 
 use support\Request;
+use Tinywan\Jwt\JwtToken;
 
 class Index
 {
     public function index(Request $request)
     {
-        return response('hello webman');
+        $user = [
+            'id'  => 202211,
+            'name'  => 'Tinywan',
+            'email' => 'Tinywan@163.com'
+        ];
+        $token = JwtToken::generateToken($user);
+        var_dump(json_encode($token));
+        // return response('hello webman');
     }
 
     public function view(Request $request)

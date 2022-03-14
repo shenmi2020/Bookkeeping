@@ -14,8 +14,11 @@
 
 use Webman\Route;
 
+Route::get('/user/login', [app\controller\User::class, 'login'])->middleware([
+    app\middleware\AuthCheck::class
+]);
+Route::any('/', [app\controller\Index::class, 'index']);
 
 
 
-
-
+Route::disableDefaultRoute();
