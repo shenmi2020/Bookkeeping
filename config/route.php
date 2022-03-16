@@ -20,5 +20,10 @@ Route::any('/user/login', [app\controller\User::class, 'login'])->middleware([
 Route::any('/', [app\controller\Index::class, 'index']);
 
 
-
+Route::any('/user/demo1', [app\controller\User::class, 'demo1'])->middleware([
+    app\middleware\AuthCheck::class
+]);
+Route::any('/user/demo2', [app\controller\User::class, 'demo2'])->middleware([
+    app\middleware\AuthCheck::class
+]);
 Route::disableDefaultRoute();

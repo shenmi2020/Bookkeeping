@@ -12,8 +12,9 @@ class AuthCheck implements MiddlewareInterface
     {
         try {
             $request->user = JwtToken::getExtend();
+            
         } catch (\Throwable $th) {
-            return json(['code' => 40100, 'msg' => '身份验证失败']);
+            return json(['code' => 10001, 'msg' => '身份验证失败']);
         }
         return $next($request);
     }

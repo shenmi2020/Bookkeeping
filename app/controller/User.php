@@ -5,10 +5,32 @@ namespace app\controller;
 use support\Request;
 use Tinywan\Jwt\JwtToken;
 use GuzzleHttp\Client;
+use support\Db;
+use app\model\User as UserModel;
 
 class User extends Base
 {
-    
+    /**
+     * 
+     */
+    public function demo1(Request $request)
+    {
+        $user = [
+            'id'  => 20225,
+            'name'  => 'Tinywan',
+            'email' => 'Tinywan@163.com'
+        ];
+        $accessToken = JwtToken::generateToken($user);
+        var_dump(json_encode($accessToken));
+        // $accessToken = JwtToken::refreshToken();
+        return json(['code' => 201, 'data' => 'succ']);
+    }
+
+    public function demo2(Request $request)
+    {
+        return json(['code' => 0, 'data' => $request->user]);
+    }
+
 
     /**
      * @Description
@@ -21,7 +43,7 @@ class User extends Base
         if (empty($code)) {
             return $this->fail('参数错误', 40001);
         }
-        $client =  new \GuzzleHttp\Client([
+        $client =  new Client([
             'timeout' => 2.0
         ]);
         $app_id = 'wx2e19b3bb60615ba3';
@@ -29,7 +51,25 @@ class User extends Base
         $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$app_id.'&secret='.$secret.'&js_code='.$code.'&grant_type=authorization_code';
         $response = $client->request('GET', $url);
         $data = $response->getBody()->getContents();
-        
-        return $this->success($data);
+        $result = json_decode($data, true);
+        if (!isset($result['openid'])) {
+            return $this->fail('服务器异常', 50000);
+        }
+        $user = UserModel::where('open_id', $result['openid'])->first()->toArray();
+        if (empty($user)) {
+            $uid = UserModel::insertGetId([
+                'open_id' => $result['openid'],
+                'create_time' => time(),
+            ]);
+            $person = [
+                'id' => $uid,
+                'open_id' => $result['openid']
+            ];
+        } else {
+            $person = $user;
+        }
+        $accessToken = JwtToken::generateToken($person);
+
+        return $this->success($accessToken);
     }
 }
