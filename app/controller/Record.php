@@ -9,10 +9,25 @@ use app\model\Record as RecordModel;
 class Record extends Base
 {
 
+    /**
+     * 列表
+     *
+     * @param Request $request
+     *
+     * @return void
+     */
     public function listInfo(Request $request)
     {
-        $data = RecordModel::first()->toArray();
-        
+        $param = $request->post();
+        $pageIndex = empty($param['pageIndex']) ? 1 : $param['pageIndex'];
+        $pageSize = empty($param['pageSize']) ? 10 : $param['pageSize'];
+
+
+        $data = RecordModel::offset(($pageIndex - 1) * $pageSize)
+            ->limit($pageSize)
+            ->orderBy('id', 'desc')
+            ->get()->toArray();
+      
         return $this->success($data);
     }
 
