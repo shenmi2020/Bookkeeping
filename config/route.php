@@ -26,4 +26,12 @@ Route::any('/user/demo1', [app\controller\User::class, 'demo1'])->middleware([
 Route::any('/user/demo2', [app\controller\User::class, 'demo2'])->middleware([
     app\middleware\AuthCheck::class
 ]);
+
+Route::group('/wx', function () {
+    // 记录
+    Route::any('/record/add', [app\controller\Record::class, 'add']);
+    Route::any('/record', [app\controller\Record::class, 'listInfo']);
+})->middleware([
+    app\middleware\AuthCheck::class
+]);
 Route::disableDefaultRoute();
