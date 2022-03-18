@@ -11,8 +11,19 @@ class Record extends Base
 
     public function listInfo(Request $request)
     {
-        $data = RecordModel::first()->toArray();
-        
+        $param =  $request->post();
+        if (empty($param['aid'])) {
+            return $this->fail('账本不能为空');
+        }
+        $pageIndex = empty($param['pageIndex']) ? 1 : $param['pageIndex'];
+        $pageSize = empty($param['pageSize']) ? 10 : $param['pageSize'];
+
+        $data = RecordModel::where('aid', $param['aid'])->offset(($pageIndex - 1) * $pageSize)
+            ->limit($pageSize)
+            ->orderBy('day', 'desc')
+            ->orderBy('id', 'desc')
+            ->get()->toArray();
+        // \sleep(3);
         return $this->success($data);
     }
 

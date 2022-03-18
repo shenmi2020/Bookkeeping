@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d84006169db2bc799cbdb2b696f9ef24",
+    "content-hash": "fdb87e43b9218cf88ace51989c9156db",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -2924,6 +2924,62 @@
                 }
             ],
             "time": "2022-01-24T18:59:03+00:00"
+        },
+        {
+            "name": "webman/console",
+            "version": "v1.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webman-php/console.git",
+                "reference": "56fc0ff9b37fbf03866ed77051bfa7007416ea55"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webman-php/console/zipball/56fc0ff9b37fbf03866ed77051bfa7007416ea55",
+                "reference": "56fc0ff9b37fbf03866ed77051bfa7007416ea55",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "symfony/console": ">=5.0",
+                "workerman/webman-framework": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Webman\\Console\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "walkor",
+                    "email": "walkor@workerman.net",
+                    "homepage": "http://www.workerman.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Webman console",
+            "homepage": "http://www.workerman.net",
+            "keywords": [
+                "webman console"
+            ],
+            "support": {
+                "email": "walkor@workerman.net",
+                "forum": "http://www.workerman.net/questions",
+                "issues": "https://github.com/webman-php/console/issues",
+                "source": "https://github.com/webman-php/console",
+                "wiki": "http://www.workerman.net/doc/webman"
+            },
+            "time": "2022-03-05T11:53:19+00:00"
         },
         {
             "name": "workerman/webman-framework",

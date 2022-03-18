@@ -21,9 +21,16 @@ class User extends Base
             'email' => 'Tinywan@163.com'
         ];
         $accessToken = JwtToken::generateToken($user);
-        var_dump(json_encode($accessToken));
+        // var_dump(json_encode($accessToken));
         // $accessToken = JwtToken::refreshToken();
-        return json(['code' => 201, 'data' => 'succ']);
+        Db::table('record')->insert([
+            'category_id' => 1,
+            'day' => '2020-09-08',
+            'remark' => '备注',
+            'aid' => 1,
+            'money' => 20
+        ]);
+        return json(['code' => 201, 'data' => $accessToken]);
     }
 
     public function demo2(Request $request)

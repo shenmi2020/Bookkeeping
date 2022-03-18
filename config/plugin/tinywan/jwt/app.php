@@ -5,7 +5,7 @@ return [
         // 算法类型 ES256、HS256、HS384、HS512、RS256、RS384、RS512
         'algorithms' => 'HS256',
         // access令牌秘钥
-        'access_secret_key' => '2022d3d3LmJq',
+        'access_secret_key' => '2023d3d3LmJq',
         // access令牌过期时间，单位秒。默认 2 小时
         'access_exp' => 36000,
         // refresh令牌秘钥
