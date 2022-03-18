@@ -23,7 +23,7 @@ class Record extends Base
             ->orderBy('day', 'desc')
             ->orderBy('id', 'desc')
             ->get()->toArray();
-        // \sleep(3);
+        
         return $this->success($data);
     }
 
