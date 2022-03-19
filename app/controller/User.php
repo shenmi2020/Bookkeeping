@@ -77,6 +77,21 @@ class User extends Base
         }
         $accessToken = JwtToken::generateToken($person);
 
+        // 如果新用户创建默认账本
+        $relation = Db::table('account')->where('uid', $person['id'])->where('status', 0)->first();
+        if (empty($relation)) {
+            $aid = Db::table('account')->insertGetId([
+                'name' => '默认账本',
+                'create_time' => time(),
+                'uid' => $person['id']
+            ]);
+            Db::table('user_relation')->insert([
+                'user_id' => $person['id'],
+                'aid' => $aid,
+                'create_time' => time()
+            ]);
+            $accessToken['aid'] = $aid;
+        }
         return $this->success($accessToken);
     }
 }

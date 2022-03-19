@@ -26,4 +26,6 @@ class User extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    protected $visible = ['id', 'open_id'];
 }
