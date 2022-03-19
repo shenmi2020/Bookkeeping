@@ -15,8 +15,8 @@ class Record extends Base
         if (empty($param['aid'])) {
             return $this->fail('账本不能为空');
         }
-        $pageIndex = empty($param['pageIndex']) ? 1 : $param['pageIndex'];
-        $pageSize = empty($param['pageSize']) ? 10 : $param['pageSize'];
+        $pageIndex = $param['pageIndex'] ?? 1;
+        $pageSize = $param['pageSize'] ?? 10;
 
         $data = RecordModel::where('aid', $param['aid'])->offset(($pageIndex - 1) * $pageSize)
             ->limit($pageSize)

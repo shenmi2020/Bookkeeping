@@ -7,7 +7,7 @@ return [
         // access令牌秘钥
         'access_secret_key' => '2023d3d3LmJq',
         // access令牌过期时间，单位秒。默认 2 小时
-        'access_exp' => 36000,
+        'access_exp' => 360000,
         // refresh令牌秘钥
         'refresh_secret_key' => '2022KTxigxc9o50c',
         // refresh令牌过期时间，单位秒。默认 7 天
