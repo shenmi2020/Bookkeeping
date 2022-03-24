@@ -46,8 +46,9 @@ class User extends Base
      */
     public function login(Request $request)
     {
-        $code = $request->post('code');
-        if (empty($code)) {
+        $param = $request->post();
+        // \var_dump($request->post());
+        if (empty($param['code'])) {
             return $this->fail('参数错误', 40001);
         }
         $client =  new Client([
@@ -55,7 +56,7 @@ class User extends Base
         ]);
         $app_id = 'wx2e19b3bb60615ba3';
         $secret = '409f2ad0d419f32f7ba359cd1cdfbd24';
-        $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$app_id.'&secret='.$secret.'&js_code='.$code.'&grant_type=authorization_code';
+        $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$app_id.'&secret='.$secret.'&js_code='.$param['code'].'&grant_type=authorization_code';
         $response = $client->request('GET', $url);
         $data = $response->getBody()->getContents();
         $result = json_decode($data, true);
@@ -91,6 +92,18 @@ class User extends Base
                 'create_time' => time()
             ]);
             $accessToken['aid'] = $aid;
+        }
+        
+        // 判断账本权限
+        if (!empty($param['aid'])) {
+            $aid_res = Db::table('user_relation')->where('user_id', $person['id'])->where('aid', $param['aid'])->first();
+            if (empty($aid_res)) {
+                $my_acc = Db::table('user_relation')->where('user_id', $person['id'])->orderBy('aid', 'desc')->first();
+                if (!empty($my_acc)) {
+                    $accessToken['aid'] = $my_acc['aid'];
+                }
+                
+            }
         }
         return $this->success($accessToken);
     }
