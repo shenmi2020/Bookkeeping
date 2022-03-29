@@ -14,8 +14,9 @@ class Index
             'name'  => 'Tinywan',
             'email' => 'Tinywan@163.com'
         ];
-        $token = JwtToken::generateToken($user);
+        // $token = JwtToken::generateToken($user);
         // var_dump(json_encode($token));
+        $token = '';
         return response('hello webman'.$token);
     }
 
