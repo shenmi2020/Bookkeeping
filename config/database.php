@@ -22,7 +22,7 @@ return [
             'host'        => '123.57.212.101',
             'port'        => 3306,
             'database'    => 'book',
-            'username'    => 'tao1',
+            'username'    => 'tao13',
             'password'    => 'tao@123!@#',
             'unix_socket' => '',
             'charset'     => 'utf8mb4',
