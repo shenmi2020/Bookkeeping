@@ -32,7 +32,8 @@
     "illuminate/database": "^9.3",
     "illuminate/pagination": "^9.3",
     "illuminate/events": "^9.3",
-    "webman/console": "^1.0.16"
+    "webman/console": "^1.0.16",
+    "vlucas/phpdotenv": "^5.4"
   },
   "suggest": {
     "ext-event": "For better performance. "

@@ -5,4 +5,3 @@
 .env
 /tests/tmp
 /tests/.phpunit.result.cache
-/config/databases.php
