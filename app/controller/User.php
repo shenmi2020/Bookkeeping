@@ -15,21 +15,23 @@ class User extends Base
      */
     public function demo1(Request $request)
     {
-        $user = [
-            'id'  => 20225,
-            'name'  => 'Tinywan',
-            'email' => 'Tinywan@163.com'
-        ];
+        // $user = [
+        //     'id'  => 20225,
+        //     'name'  => 'Tinywan',
+        //     'email' => 'Tinywan@163.com'
+        // ];
+        $user = UserModel::where('id', 2)->first()->toArray();
+        var_dump($user);
         $accessToken = JwtToken::generateToken($user);
         // var_dump(json_encode($accessToken));
         // $accessToken = JwtToken::refreshToken();
-        Db::table('record')->insert([
-            'category_id' => 1,
-            'day' => '2020-09-08',
-            'remark' => '备注',
-            'aid' => 1,
-            'money' => 20
-        ]);
+        // Db::table('record')->insert([
+        //     'category_id' => 1,
+        //     'day' => '2020-09-08',
+        //     'remark' => '备注',
+        //     'aid' => 1,
+        //     'money' => 20
+        // ]);
         return json(['code' => 201, 'data' => $accessToken]);
     }
 
@@ -91,20 +93,19 @@ class User extends Base
                 'aid' => $aid,
                 'create_time' => time()
             ]);
-            $accessToken['aid'] = $aid;
+            // $accessToken['aid'] = $aid;
         }
         
         // 判断账本权限
-        if (!empty($param['aid'])) {
-            $aid_res = Db::table('user_relation')->where('user_id', $person['id'])->where('aid', $param['aid'])->first();
-            if (empty($aid_res)) {
-                $my_acc = Db::table('user_relation')->where('user_id', $person['id'])->orderBy('aid', 'desc')->first();
-                if (!empty($my_acc)) {
-                    $accessToken['aid'] = $my_acc['aid'];
-                }
-                
-            }
-        }
+        // if (!empty($param['aid'])) {
+        //     $aid_res = Db::table('user_relation')->where('user_id', $person['id'])->where('aid', $param['aid'])->first();
+        //     if (empty($aid_res)) {
+        //         $my_acc = Db::table('user_relation')->where('user_id', $person['id'])->orderBy('aid', 'desc')->first();
+        //         if (!empty($my_acc)) {
+        //             $accessToken['aid'] = $my_acc['aid'];
+        //         }
+        //     }
+        // }
         return $this->success($accessToken);
     }
 }

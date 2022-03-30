@@ -2,13 +2,18 @@
 
 namespace app\controller;
 
+use app\model\Account;
 use support\Request;
-use support\Log;
 use app\model\Record as RecordModel;
+use support\Db;
+use app\model\User as UserModel;
 
 class Record extends Base
 {
 
+    /**
+     * 账单列表
+     */
     public function listInfo(Request $request)
     {
         $param =  $request->post();
@@ -17,6 +22,11 @@ class Record extends Base
         }
         $pageIndex = $param['pageIndex'] ?? 1;
         $pageSize = $param['pageSize'] ?? 10;
+
+        $relation = UserModel::where('id', $request->user['id'])->first()->accounts()->where('aid', $param['aid'])->exists();
+        if (!$relation) {
+            return $this->fail('没有权限');
+        }
 
         $data = RecordModel::where('aid', $param['aid'])->offset(($pageIndex - 1) * $pageSize)
             ->limit($pageSize)

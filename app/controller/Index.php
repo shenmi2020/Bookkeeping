@@ -15,8 +15,8 @@ class Index
             'name'  => 'Tinywan',
             'email' => 'Tinywan@163.com'
         ];
-        // $token = JwtToken::generateToken($user);
-        // var_dump(json_encode($token));
+        $token = JwtToken::generateToken($user);
+        var_dump(json_encode($token));
         $user = Db::table('user')->first();
         var_dump($user);
         return response('hello webman');
