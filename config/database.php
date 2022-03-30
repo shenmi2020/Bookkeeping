@@ -19,11 +19,11 @@ return [
     'connections' => [
         'mysql' => [
             'driver'      => 'mysql',
-            'host'        => '123.57.212.101',
-            'port'        => 3306,
-            'database'    => 'book',
-            'username'    => 'tao',
-            'password'    => 'tao@123!@#',
+            'host'        => env('DB_HOST', '127.0.0.1'),
+            'port'        => env('DB_PORT', '3306'),
+            'database'    => env('DB_DATABASE', 'book'),
+            'username'    => env('DB_USERNAME', 'root'),
+            'password'    => env('DB_PASSWORD', ''),
             'unix_socket' => '',
             'charset'     => 'utf8mb4',
             'collation'   => 'utf8mb4_unicode_ci',

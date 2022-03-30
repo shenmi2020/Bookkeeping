@@ -15,15 +15,24 @@ class User extends Base
      */
     public function demo1(Request $request)
     {
-        $user = [
-            'id'  => 20225,
-            'name'  => 'Tinywan',
-            'email' => 'Tinywan@163.com'
-        ];
+        // $user = [
+        //     'id'  => 20225,
+        //     'name'  => 'Tinywan',
+        //     'email' => 'Tinywan@163.com'
+        // ];
+        $user = UserModel::where('id', 2)->first()->toArray();
+        var_dump($user);
         $accessToken = JwtToken::generateToken($user);
-        var_dump(json_encode($accessToken));
+        // var_dump(json_encode($accessToken));
         // $accessToken = JwtToken::refreshToken();
-        return json(['code' => 201, 'data' => 'succ']);
+        // Db::table('record')->insert([
+        //     'category_id' => 1,
+        //     'day' => '2020-09-08',
+        //     'remark' => '备注',
+        //     'aid' => 1,
+        //     'money' => 20
+        // ]);
+        return json(['code' => 201, 'data' => $accessToken]);
     }
 
     public function demo2(Request $request)
@@ -39,8 +48,9 @@ class User extends Base
      */
     public function login(Request $request)
     {
-        $code = $request->post('code');
-        if (empty($code)) {
+        $param = $request->post();
+        // \var_dump($request->post());
+        if (empty($param['code'])) {
             return $this->fail('参数错误', 40001);
         }
         $client =  new Client([
@@ -48,7 +58,7 @@ class User extends Base
         ]);
         $app_id = 'wx2e19b3bb60615ba3';
         $secret = '409f2ad0d419f32f7ba359cd1cdfbd24';
-        $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$app_id.'&secret='.$secret.'&js_code='.$code.'&grant_type=authorization_code';
+        $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$app_id.'&secret='.$secret.'&js_code='.$param['code'].'&grant_type=authorization_code';
         $response = $client->request('GET', $url);
         $data = $response->getBody()->getContents();
         $result = json_decode($data, true);
@@ -70,6 +80,32 @@ class User extends Base
         }
         $accessToken = JwtToken::generateToken($person);
 
+        // 如果新用户创建默认账本
+        $relation = Db::table('account')->where('uid', $person['id'])->where('status', 0)->first();
+        if (empty($relation)) {
+            $aid = Db::table('account')->insertGetId([
+                'name' => '默认账本',
+                'create_time' => time(),
+                'uid' => $person['id']
+            ]);
+            Db::table('user_relation')->insert([
+                'user_id' => $person['id'],
+                'aid' => $aid,
+                'create_time' => time()
+            ]);
+            // $accessToken['aid'] = $aid;
+        }
+        
+        // 判断账本权限
+        // if (!empty($param['aid'])) {
+        //     $aid_res = Db::table('user_relation')->where('user_id', $person['id'])->where('aid', $param['aid'])->first();
+        //     if (empty($aid_res)) {
+        //         $my_acc = Db::table('user_relation')->where('user_id', $person['id'])->orderBy('aid', 'desc')->first();
+        //         if (!empty($my_acc)) {
+        //             $accessToken['aid'] = $my_acc['aid'];
+        //         }
+        //     }
+        // }
         return $this->success($accessToken);
     }
 }

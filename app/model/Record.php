@@ -28,4 +28,6 @@ class Record extends Model
     public $timestamps = false;
 
     // protected $guarded  = [];
+    
+    protected $visible = ['id', 'day', 'type', 'money', 'remark'];
 }

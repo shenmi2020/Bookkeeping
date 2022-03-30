@@ -4,14 +4,14 @@ namespace app\model;
 
 use support\Model;
 
-class User extends Model
+class Account extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'user';
+    protected $table = 'account';
 
     /**
      * The primary key associated with the table.
@@ -27,10 +27,12 @@ class User extends Model
      */
     public $timestamps = false;
 
-    protected $visible = ['id', 'open_id'];
+    // protected $guarded  = [];
+    protected $visible = ['id', 'name'];
 
-    public function accounts()
+    public function records()
     {
-        return $this->belongsToMany('app\model\Account', 'account_user', 'user_id', 'aid');
+        return $this->hasMany('app\model\Record', 'aid', 'id');
     }
+ 
 }

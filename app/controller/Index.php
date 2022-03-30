@@ -4,6 +4,7 @@ namespace app\controller;
 
 use support\Request;
 use Tinywan\Jwt\JwtToken;
+use support\Db;
 
 class Index
 {
@@ -16,7 +17,9 @@ class Index
         ];
         $token = JwtToken::generateToken($user);
         var_dump(json_encode($token));
-        // return response('hello webman');
+        $user = Db::table('user')->first();
+        var_dump($user);
+        return response('hello webman');
     }
 
     public function view(Request $request)

@@ -2,32 +2,38 @@
 
 namespace app\controller;
 
+use app\model\Account;
 use support\Request;
-use support\Log;
 use app\model\Record as RecordModel;
+use support\Db;
+use app\model\User as UserModel;
 
 class Record extends Base
 {
 
     /**
-     * 列表
-     *
-     * @param Request $request
-     *
-     * @return void
+     * 账单列表
      */
     public function listInfo(Request $request)
     {
-        $param = $request->post();
-        $pageIndex = empty($param['pageIndex']) ? 1 : $param['pageIndex'];
-        $pageSize = empty($param['pageSize']) ? 10 : $param['pageSize'];
+        $param =  $request->post();
+        if (empty($param['aid'])) {
+            return $this->fail('账本不能为空');
+        }
+        $pageIndex = $param['pageIndex'] ?? 1;
+        $pageSize = $param['pageSize'] ?? 10;
 
+        $relation = UserModel::where('id', $request->user['id'])->first()->accounts()->where('aid', $param['aid'])->exists();
+        if (!$relation) {
+            return $this->fail('没有权限');
+        }
 
-        $data = RecordModel::offset(($pageIndex - 1) * $pageSize)
+        $data = RecordModel::where('aid', $param['aid'])->offset(($pageIndex - 1) * $pageSize)
             ->limit($pageSize)
+            ->orderBy('day', 'desc')
             ->orderBy('id', 'desc')
             ->get()->toArray();
-      
+        
         return $this->success($data);
     }
 

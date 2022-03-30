@@ -21,13 +21,15 @@ Route::any('/', [app\controller\Index::class, 'index']);
 
 
 Route::any('/user/demo1', [app\controller\User::class, 'demo1'])->middleware([
-    app\middleware\AuthCheck::class
+    // app\middleware\AuthCheck::class
 ]);
 Route::any('/user/demo2', [app\controller\User::class, 'demo2'])->middleware([
     app\middleware\AuthCheck::class
 ]);
 
 Route::group('/wx', function () {
+    // 账本
+    Route::any('/account', [app\controller\Account::class, 'listInfo']);
     // 记录
     Route::post('/record/add', [app\controller\Record::class, 'add']);
     Route::post('/record', [app\controller\Record::class, 'listInfo']);
