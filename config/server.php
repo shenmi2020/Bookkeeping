@@ -15,11 +15,12 @@
 use support\Request;
 
 return [
-    'listen' => 'http://0.0.0.0:8787',
+    'listen' => 'http://0.0.0.0:9001',
     'transport' => 'tcp',
     'context' => [],
     'name' => 'webman',
     'count' => cpu_count() * 2,
+    // 'count' => 4,
     'user' => '',
     'group' => '',
     'reusePort' => false,

@@ -10,16 +10,16 @@ class Index
 {
     public function index(Request $request)
     {
-        // $user = [
-        //     'id'  => 202211,
-        //     'name'  => 'Tinywan',
-        //     'email' => 'Tinywan@163.com'
-        // ];
-        // $token = JwtToken::generateToken($user);
+        $user = [
+            'id'  => 202211,
+            'name'  => 'Tinywan',
+            'email' => 'Tinywan@163.com'
+        ];
+        $token = JwtToken::generateToken($user);
         // var_dump(json_encode($token));
-        // $user = Db::table('user')->first();
+        $user = Db::table('account_user')->first();
         // var_dump($user);
-        return response('hello webman');
+        return response('hello webman'.json_encode($token));
     }
 
     public function view(Request $request)
