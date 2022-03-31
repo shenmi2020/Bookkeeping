@@ -31,8 +31,8 @@ Route::group('/wx', function () {
     // 账本
     Route::any('/account', [app\controller\Account::class, 'listInfo']);
     // 记录
-    Route::any('/record/add', [app\controller\Record::class, 'add']);
-    Route::any('/record', [app\controller\Record::class, 'listInfo']);
+    Route::post('/record/add', [app\controller\Record::class, 'add']);
+    Route::post('/record', [app\controller\Record::class, 'listInfo']);
 })->middleware([
     app\middleware\AuthCheck::class
 ]);
