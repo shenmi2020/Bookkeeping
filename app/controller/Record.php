@@ -21,7 +21,7 @@ class Record extends Base
             return $this->fail('账本不能为空');
         }
         $pageIndex = $param['pageIndex'] ?? 1;
-        $pageSize = $param['pageSize'] ?? 10;
+        $pageSize = $param['pageSize'] ?? 20;
 
         $relation = UserModel::where('id', $request->user['id'])->first()->accounts()->where('aid', $param['aid'])->exists();
         if (!$relation) {
