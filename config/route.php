@@ -29,10 +29,12 @@ Route::any('/user/demo2', [app\controller\User::class, 'demo2'])->middleware([
 
 Route::group('/wx', function () {
     // 账本
-    Route::any('/account', [app\controller\Account::class, 'listInfo']);
+    Route::post('/account', [app\controller\Account::class, 'listInfo']);
     // 记录
     Route::post('/record/add', [app\controller\Record::class, 'add']);
     Route::post('/record', [app\controller\Record::class, 'listInfo']);
+    // 分类
+    Route::post('/category', [app\controller\Category::class, 'listInfo']);
 })->middleware([
     app\middleware\AuthCheck::class
 ]);
