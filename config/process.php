@@ -33,5 +33,13 @@ return [
                 'php', 'html', 'htm', 'env'
             ]
         ]
+    ],
+    'task'  => [
+        'handler'  => process\Task::class
+    ],
+    'websocket_test' => [
+        'handler' => process\Pusher::class,
+        'listen'  => 'websocket://0.0.0.0:8888',
+        'count'   => 1,
     ]
 ];

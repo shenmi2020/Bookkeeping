@@ -29,5 +29,10 @@ class Record extends Model
 
     // protected $guarded  = [];
     
-    protected $visible = ['id', 'day', 'type', 'money', 'remark'];
+    protected $visible = ['id', 'day', 'type', 'money', 'remark', 'category_name'];
+
+    // public function post()
+    // {
+    //     return $this->belongsTo('app\model\Category', 'category_id')->select('title');;
+    // }
 }

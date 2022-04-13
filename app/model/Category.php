@@ -28,4 +28,5 @@ class Category extends Model
     public $timestamps = false;
     protected $visible = ['id', 'title'];
     
+    
 }

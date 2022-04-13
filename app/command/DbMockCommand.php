@@ -31,11 +31,15 @@ class DbMockCommand extends Command
     {
         $start_date = 1642486045;
         $end_date = 1647583645;
-        for ($i = 1; $i > 0; $i++) {
+        for ($i = 1000; $i > 0; $i--) {
             $date = date('Y-m-d', mt_rand($start_date, $end_date));
+            $cate_id = mt_rand(1, 5);
+            $cate_info = Db::table('category')->where('id', $cate_id)->first();
+
             $name = $this->getChar(mt_rand(3, 6));
             Db::table('record')->insert([
-                'category_id' => 1,
+                'category_id' => $cate_info->id,
+                'category_name' => $cate_info->title,
                 'day' => $date,
                 'remark' => $name,
                 'aid' => 1,

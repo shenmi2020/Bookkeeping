@@ -28,11 +28,12 @@ class Record extends Base
             return $this->fail('没有权限');
         }
 
-        $data = RecordModel::where('aid', $param['aid'])->offset(($pageIndex - 1) * $pageSize)
+        $data = RecordModel::where('aid', $param['aid'])
+            ->offset(($pageIndex - 1) * $pageSize)
             ->limit($pageSize)
             ->orderBy('day', 'desc')
             ->orderBy('id', 'desc')
-            ->get()->toArray();
+            ->get();
         
         return $this->success($data);
     }
