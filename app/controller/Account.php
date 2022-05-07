@@ -15,6 +15,7 @@ class Account extends Base
     public function listInfo(Request $request)
     {
         $data = UserModel::where('id', $request->user['id'])->first()->accounts()->orderBy('id', 'desc')->get();
+        
         return $this->success($data); 
     }
 

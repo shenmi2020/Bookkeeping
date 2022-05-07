@@ -33,8 +33,27 @@ class Record extends Base
             ->limit($pageSize)
             ->orderBy('day', 'desc')
             ->orderBy('id', 'desc')
-            ->get();
-        
+            ->get()->toArray();
+        $line = [];
+        foreach ($data as &$val) {
+            if (in_array($val['day'], $line)) {
+                continue;
+            }
+            $line_data = RecordModel::where('aid', $param['aid'])->where('day', $val['day'])->get();
+            $inc = $exp = 0;
+            foreach ($line_data as $val2) {
+                if ($val2['type'] == 1) {
+                    $exp += $val2['money'];
+                } else {
+                    $inc += $val2['money'];
+                }
+            }
+            $val['inc'] = $inc;
+            $val['exp'] = $exp;
+            $line[] = $val['day'];
+        }
+        unset($val);
+
         return $this->success($data);
     }
 
